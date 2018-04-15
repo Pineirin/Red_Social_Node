@@ -64,6 +64,7 @@ app.set('db','mongodb://admin:sdi@ds029655.mlab.com:29655/redsocial');
 app.set('clave','abcdefg');//clave de cifrado
 app.set('crypto',crypto);//referencia al módulo crypto
 
+require("./routes/rhome.js")(app, swig);
 require("./routes/rusuarios.js")(app, swig, gestorBD);
 
 //lanzar el servidor
