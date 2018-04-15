@@ -28,20 +28,20 @@ module.exports = function(app, swig, gestorBD) {
 					
 					gestorBD.insertarUsuario(usuario, function(id) {
 						if (id == null) {
-							res.send("Error al insertar ");
+							res.redirect("/registrarse?mensaje=Error al registrarse");
 						} else {
-							res.send('Usuario Insertado ' + id);
+							res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
 						}
 					});
 				}
 				else{
-					res.send("Las contraseñas no coinciden");
+					res.redirect("/registrarse?mensaje=Las contraseñas no coinciden");
 				}
 				
 			}
 			else {
 				req.session.usuario = usuarios[0].email;
-				res.send("Ya existe el usuario");
+				res.redirect("/registrarse?mensaje=El email ya existe");
 			}
 		});
 
