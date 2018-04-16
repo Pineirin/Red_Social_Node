@@ -11,9 +11,15 @@ module.exports = function(app, swig, gestorBD) {
             if (id == null) {
                 res.redirect("/usuarios?mensaje=Error al enviar peticion");
             } else {
-                res.redirect("/usuarios?mensaje=Peticion de amistad enviada");
-            }
+            	res.redirect("/usuarios?mensaje=Peticion de amistad enviada");
+        	}
         });
 
     });
+    
+    //var criterio = {
+	//$or: [ {"_id": gestorBD.mongo.ObjectID(req.session._id) },
+	//	{"_id": gestorBD.mongo.ObjectID(id) } ]
+		
+	//};
 };

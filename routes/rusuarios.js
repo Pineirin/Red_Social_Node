@@ -90,13 +90,38 @@ module.exports = function(app, swig, gestorBD) {
             criterio = { "name" :  {$regex : ".*"+req.query.busqueda+".*"},
                 "email" :  {$regex : ".*"+req.query.busqueda+".*"}};
         }
-
+        
+        
         gestorBD.obtenerUsuarios(criterio, function(usuarios) {
-            var respuesta = swig.renderFile('views/busuarios.html',
-                {
-                    usuarios : usuarios
-                });
-            res.send(respuesta);
+        	
+        	var criterioRelaciones ={
+        		origen : gestorBD.mongo.ObjectID(req.session._id)	
+        	}
+        	
+        	gestorBD.obtenerRelaciones(criterioRelaciones, function(relaciones) {
+        		
+        		var idsRelaciones=[];
+        		
+        		for(var i=0;i<relaciones.length;i++){
+        			idsRelaciones[i] = relaciones[i]._id;
+        		}
+        		
+        		var criterioUsuariosEnRelaciones ={
+        			"_id" : { $in : idsRelaciones }
+        		}
+        		
+        		gestorBD.obtenerUsuarios(criterioUsuariosEnRelaciones, function(usuariosEnRelaciones) {
+        			
+        			var respuesta = swig.renderFile('views/busuarios.html',
+                            {
+                        		//Le paso 2 variables, una todos los usuarios 
+                        		//y otra solo los que esten en peticiones
+                                usuarios : usuarios
+                            });
+                        res.send(respuesta);
+        		});
+        	
+        	});
         });
 	});
 };

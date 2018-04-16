@@ -33,7 +33,9 @@
 			<tr>
 				<td>{{ usuario.email }}</td>
 				<td>{{ usuario.name }}</td>
+				<!-- {% if not usuario.peticion %}-->
 				<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar canción</a></td>
+				<!--{% endif %}-->
 			</tr>
 		{% endfor %}
 		</tbody>
