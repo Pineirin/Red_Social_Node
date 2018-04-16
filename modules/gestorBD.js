@@ -42,5 +42,23 @@ module.exports = {
 			}
 		});
 	},
+
+    insertarRelacion : function(relacion, funcionCallback) {
+        this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+            if (err) {
+                funcionCallback(null);
+            } else {
+                var collection = db.collection('relaciones');
+                collection.insert(relacion, function(err, result) {
+                    if (err) {
+                        funcionCallback(null);
+                    } else {
+                        funcionCallback(result.ops[0]._id);
+                    }
+                    db.close();
+                });
+            }
+        });
+    },
 	
 };

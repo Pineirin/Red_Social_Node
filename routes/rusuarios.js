@@ -13,11 +13,11 @@ module.exports = function(app, swig, gestorBD) {
 			email : req.body.email,
 			name : req.body.name,
 			password : seguro 
-		}
+		};
 		
 		var criterio = {
 				email : req.body.email,
-		}
+		};
 		
 		gestorBD.obtenerUsuarios(criterio, function(usuarios) {
 			if (usuarios == null || usuarios.length == 0) {
@@ -45,11 +45,31 @@ module.exports = function(app, swig, gestorBD) {
 			}
 		});
 
-	})
+	});
 	
 	app.get("/identificarse", function(req, res) {
 		var respuesta = swig.renderFile('views/bidentificacion.html', {});
 		res.send(respuesta);
+	});
+
+	app.post("/identificarse", function(req, res){
+        var seguro = app.get("crypto").createHmac('sha256', app.get('clave'))
+            .update(req.body.password).digest('hex');
+
+        var criterio = {
+            email : req.body.email,
+            password : seguro
+        }
+
+        gestorBD.obtenerUsuarios(criterio, function(usuarios) {
+            if (usuarios == null || usuarios.length == 0) {
+                req.session.usuario = null;
+                res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
+            } else {
+                req.session.usuario = usuarios[0].email;
+                res.redirect("/usuarios");
+            }
+        });
 	});
 	
 	
@@ -60,6 +80,23 @@ module.exports = function(app, swig, gestorBD) {
 	
 	app.get('/desconectarse', function (req, res) {
 		 req.session.usuario = null;
-		 res.send("Usuario desconectado");
-	})
+		 res.redirect("/identificarse");
+	});
+
+	app.get('/usuarios', function(req, res){
+        var criterio = {};
+
+        if( req.query.busqueda != null ){
+            criterio = { "name" :  {$regex : ".*"+req.query.busqueda+".*"},
+                "email" :  {$regex : ".*"+req.query.busqueda+".*"}};
+        }
+
+        gestorBD.obtenerUsuarios(criterio, function(usuarios) {
+            var respuesta = swig.renderFile('views/busuarios.html',
+                {
+                    usuarios : usuarios
+                });
+            res.send(respuesta);
+        });
+	});
 };
