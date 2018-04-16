@@ -25,6 +25,8 @@
 			<tr>
 				<th>Email</th>
 				<th>Nombre</th>
+				<th>fdfd</th>
+				<th>fdfd</th>
 				<th class="col-md-1"></th>
 			</tr>
 		</thead>
@@ -33,9 +35,15 @@
 			<tr>
 				<td>{{ usuario.email }}</td>
 				<td>{{ usuario.name }}</td>
-				<!-- {% if not usuario.peticion %}-->
-				<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar canción</a></td>
-				<!--{% endif %}-->
+				<td>{{ usuarioEnSesion }}</td>
+				<td>{{ usuariosEnRelaciones }}</td>
+				
+				{% if usuario.email != usuarioEnSesion %}
+					{% if !(usuario in usuariosEnRelaciones) %}
+						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar canción</a></td>
+					{% endif %}
+				
+				{% endif %}
 			</tr>
 		{% endfor %}
 		</tbody>

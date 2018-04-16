@@ -95,7 +95,8 @@ module.exports = function(app, swig, gestorBD) {
         gestorBD.obtenerUsuarios(criterio, function(usuarios) {
         	
         	var criterioRelaciones ={
-        		origen : gestorBD.mongo.ObjectID(req.session._id)	
+        			$or: [ {origen: req.session.usuario },
+        				{destino: req.session.usuario } ]
         	}
         	
         	gestorBD.obtenerRelaciones(criterioRelaciones, function(relaciones) {
@@ -116,7 +117,9 @@ module.exports = function(app, swig, gestorBD) {
                             {
                         		//Le paso 2 variables, una todos los usuarios 
                         		//y otra solo los que esten en peticiones
-                                usuarios : usuarios
+                                usuarios : usuarios,
+                                usuarioEnSesion : req.session.usuario,
+                                usuariosEnRelaciones : usuariosEnRelaciones
                             });
                         res.send(respuesta);
         		});
