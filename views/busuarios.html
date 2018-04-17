@@ -37,7 +37,7 @@
 				<td>{{ emailsEnRelaciones }}</td>
 				
 				{% if usuario.email != usuarioEnSesion %}
-					{% if contains(emailsEnRelaciones,usuario.email) %}
+					{% if usuario.email in emailsEnRelaciones %}
 					
 					{% else %}
 						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar amigo</a></td>
