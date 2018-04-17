@@ -26,7 +26,6 @@
 				<th>Email</th>
 				<th>Nombre</th>
 				<th>fdfd</th>
-				<th>fdfd</th>
 				<th class="col-md-1"></th>
 			</tr>
 		</thead>
@@ -35,14 +34,14 @@
 			<tr>
 				<td>{{ usuario.email }}</td>
 				<td>{{ usuario.name }}</td>
-				<td>{{ usuarioEnSesion }}</td>
-				<td>{{ usuariosEnRelaciones }}</td>
+				<td>{{ emailsEnRelaciones }}</td>
 				
 				{% if usuario.email != usuarioEnSesion %}
-					{% if !(usuario in usuariosEnRelaciones) %}
-						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar canción</a></td>
+					{% if contains(emailsEnRelaciones,usuario.email) %}
+					
+					{% else %}
+						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar amigo</a></td>
 					{% endif %}
-				
 				{% endif %}
 			</tr>
 		{% endfor %}

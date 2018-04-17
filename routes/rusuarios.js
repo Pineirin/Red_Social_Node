@@ -95,36 +95,47 @@ module.exports = function(app, swig, gestorBD) {
         gestorBD.obtenerUsuarios(criterio, function(usuarios) {
         	
         	var criterioRelaciones ={
-        			$or: [ {origen: req.session.usuario },
-        				{destino: req.session.usuario } ]
+        			$or: [ {"origen": req.session.usuario },
+        				{"destino": req.session.usuario } ]
         	}
         	
         	gestorBD.obtenerRelaciones(criterioRelaciones, function(relaciones) {
         		
-        		var idsRelaciones=[];
+        		var emailsEnRelaciones=[];
         		
         		for(var i=0;i<relaciones.length;i++){
-        			idsRelaciones[i] = relaciones[i]._id;
-        		}
-        		
-        		var criterioUsuariosEnRelaciones ={
-        			"_id" : { $in : idsRelaciones }
-        		}
-        		
-        		gestorBD.obtenerUsuarios(criterioUsuariosEnRelaciones, function(usuariosEnRelaciones) {
+        			var origen=relaciones[i].origen;
+        			var destino=relaciones[i].destino;
+        			if(!(contains(emailsEnRelaciones,origen))){
+        				emailsEnRelaciones[emailsEnRelaciones.length] = origen;
+        			}
+        			if(!(contains(emailsEnRelaciones,destino))){
+        				emailsEnRelaciones[emailsEnRelaciones.length] = destino;
+        			}
         			
-        			var respuesta = swig.renderFile('views/busuarios.html',
+        		}
+        			
+        		var respuesta = swig.renderFile('views/busuarios.html',
                             {
                         		//Le paso 2 variables, una todos los usuarios 
                         		//y otra solo los que esten en peticiones
                                 usuarios : usuarios,
                                 usuarioEnSesion : req.session.usuario,
-                                usuariosEnRelaciones : usuariosEnRelaciones
+                                emailsEnRelaciones : emailsEnRelaciones
                             });
-                        res.send(respuesta);
-        		});
+                res.send(respuesta);
+        		
         	
         	});
         });
 	});
+	
+	function contains(lista, email){
+		 for(var i=0;i<lista.length;i++){
+			 if(lista[i]==email){
+				 return true;
+			 }
+		 }
+		 return false;
+	}
 };
