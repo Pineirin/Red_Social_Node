@@ -112,16 +112,30 @@ module.exports = function(app, swig, gestorBD) {
         			if(!(contains(emailsEnRelaciones,destino))){
         				emailsEnRelaciones[emailsEnRelaciones.length] = destino;
         			}
+        		}
+        		
+        		var nuevosUsuarios = [];
+        		
+        		for(var i=0;i<usuarios.length;i++){
+        			var usuario ={
+        				_id : usuarios[i]._id,
+        				email : usuarios[i].email,
+        				name : usuarios[i].name,
+        				tieneRelacion : false
+        			}
+        			
+        			if(contains(emailsEnRelaciones, usuario.email)){
+        				usuario.tieneRelacion=true;
+        			}
+        			
+        			nuevosUsuarios[i]=usuario;
         			
         		}
         			
         		var respuesta = swig.renderFile('views/busuarios.html',
                             {
-                        		//Le paso 2 variables, una todos los usuarios 
-                        		//y otra solo los que esten en peticiones
-                                usuarios : usuarios,
-                                usuarioEnSesion : req.session.usuario,
-                                emailsEnRelaciones : emailsEnRelaciones
+        						nuevosUsuarios : nuevosUsuarios,
+                                usuarioEnSesion : req.session.usuario
                             });
                 res.send(respuesta);
         		

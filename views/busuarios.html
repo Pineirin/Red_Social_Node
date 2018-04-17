@@ -25,24 +25,21 @@
 			<tr>
 				<th>Email</th>
 				<th>Nombre</th>
-				<th>fdfd</th>
 				<th class="col-md-1"></th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for usuario in usuarios %}
+		{% for usuario in nuevosUsuarios %}
 			<tr>
 				<td>{{ usuario.email }}</td>
 				<td>{{ usuario.name }}</td>
-				<td>{{ emailsEnRelaciones }}</td>
 				
-				{% if usuario.email != usuarioEnSesion %}
-					{% if usuario.email in emailsEnRelaciones %}
-					
-					{% else %}
+				{% if usuario.email!=usuarioEnSesion %}
+					{% if !usuario.tieneRelacion %}
 						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar amigo</a></td>
-					{% endif %}
+					{% endif %}		
 				{% endif %}
+		
 			</tr>
 		{% endfor %}
 		</tbody>
