@@ -87,8 +87,8 @@ module.exports = function(app, swig, gestorBD) {
         var criterio = {};
 
         if( req.query.busqueda != null ){
-            criterio = { "name" :  {$regex : ".*"+req.query.busqueda+".*"},
-                "email" :  {$regex : ".*"+req.query.busqueda+".*"}};
+            criterio = { $or: [ {"name" :  {$regex : ".*"+req.query.busqueda+".*"}},
+            	{"email" :  {$regex : ".*"+req.query.busqueda+".*"}} ] }
         }
         
         
