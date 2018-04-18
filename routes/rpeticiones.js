@@ -26,31 +26,26 @@ module.exports = function(app, swig, gestorBD) {
 
     app.get('/peticiones', function(req, res){
 
-        var criterio ={ destino: req.session.usuario };
+        var criterio ={ "destino": req.session.usuario };
 
         gestorBD.obtenerRelaciones(criterio, function(relaciones) {
+            var peticiones=[];
 
-        	var peticiones=[];
 
+			var usuariosSolicitantes = [];
         	for(var i=0;i<relaciones.length;i++){
-                var criterioUsuarios = {email: relaciones[i].origen};
+                usuariosSolicitantes.push(relaciones[i].origen);
+			}
 
-                gestorBD.obtenerUsuarios(criterioUsuarios, function (usuarios) {
-                    var usuario ={
-                        _id : usuarios[0]._id,
-                        email : usuarios[0].email,
-                        name : usuarios[0].name,
-                    };
-                    peticiones[i] = usuario;
-                });
-        	}
-
-
-        	var respuesta = swig.renderFile('views/bpeticiones.html',
-				{
-					peticiones : peticiones
-				});
-        	res.send(respuesta);
+			var criterio = {"email" : { $in : usuariosSolicitantes} };
+            //var criterio = {"email" : "adripc@live.com" };
+        	gestorBD.obtenerUsuarios(criterio, function (usuarios) {
+                var respuesta = swig.renderFile('views/bpeticiones.html',
+                    {
+                        peticiones : usuarios
+                    });
+                res.send(respuesta);
+        	});
         });
 
     });
