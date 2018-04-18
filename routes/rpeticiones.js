@@ -37,9 +37,9 @@ module.exports = function(app, swig, gestorBD) {
 
                 gestorBD.obtenerUsuarios(criterioUsuarios, function (usuarios) {
                     var usuario ={
-                        _id : usuarios[i]._id,
-                        email : usuarios[i].email,
-                        name : usuarios[i].name,
+                        _id : usuarios[0]._id,
+                        email : usuarios[0].email,
+                        name : usuarios[0].name,
                     };
                     peticiones[i] = usuario;
                 });
