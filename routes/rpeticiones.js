@@ -33,9 +33,16 @@ module.exports = function(app, swig, gestorBD) {
         	var peticiones=[];
 
         	for(var i=0;i<relaciones.length;i++){
-                var criterioUsuarios = {email: relaciones[i].origen}
+                var criterioUsuarios = {email: relaciones[i].origen};
 
-                peticiones[i] = relaciones[i].origen;
+                gestorBD.obtenerUsuarios(criterioUsuarios, function (usuarios) {
+                    var usuario ={
+                        _id : usuarios[i]._id,
+                        email : usuarios[i].email,
+                        name : usuarios[i].name,
+                    };
+                    peticiones[i] = usuario;
+                });
         	}
 
 

@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% block titulo %} Usuarios {% endblock %}
+{% extends "base.html" %} {% block titulo %} Amigos{% endblock %}
 
 {% block contenido_principal %}
-<h2>Usuarios</h2>
+<h2>Amigos</h2>
 
 <!-- Búsqueda -->
 <div class="row">
@@ -25,21 +25,13 @@
 			<tr>
 				<th>Email</th>
 				<th>Nombre</th>
-				<th class="col-md-1"></th>
 			</tr>
 		</thead>
 		<tbody>
-		{% for usuario in nuevosUsuarios %}
+		{% for usuario in amigos %}
 			<tr>
-				<td>{{ usuario.email }}</td>
-				<td>{{ usuario.name }}</td>
-				
-				{% if usuario.email!=usuarioEnSesion %}
-					{% if !usuario.tieneRelacion %}
-						<td><a href="/peticion/enviar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar amigo</a></td>
-					{% endif %}		
-				{% endif %}
-		
+				<td>{{ usuario.email}}</td>
+				<td>{{ usuario.name}}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
