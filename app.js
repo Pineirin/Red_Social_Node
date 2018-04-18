@@ -48,6 +48,7 @@ routerUsuarioSession.use(function(req, res, next) {
 // Aplicar routerUsuarioSession -> para proihibir o dejar entrar en una determinada página
 //en cada una de estas páginas se aplica el routerUsuarioSession
 app.use("/usuarios",routerUsuarioSession);
+app.use("/peticiones",routerUsuarioSession);
 
 //se declara que estamos permitiendo el acceso a ficheros estaticos
 //en la carpeta "public
