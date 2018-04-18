@@ -23,6 +23,29 @@ module.exports = function(app, swig, gestorBD) {
 		});
 
     });
+
+    app.get('/peticiones', function(req, res){
+
+        var criterio ={ destino: req.session.usuario };
+
+        gestorBD.obtenerRelaciones(criterio, function(relaciones) {
+
+        	var peticiones=[];
+
+        	for(var i=0;i<relaciones.length;i++){
+                var usuario = relaciones[i].origen
+        		peticiones[i] = usuario;
+        	}
+
+
+        	var respuesta = swig.renderFile('views/bpeticiones.html',
+				{
+					peticiones : peticiones
+				});
+        	res.send(respuesta);
+        });
+
+    });
     
     //var criterio = {
 	//$or: [ {"_id": gestorBD.mongo.ObjectID(req.session._id) },
