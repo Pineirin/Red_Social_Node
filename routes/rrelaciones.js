@@ -76,13 +76,28 @@ module.exports = function(app, swig, gestorBD) {
                 usuariosSolicitantes.push(relaciones[i].origen);
             }
 
+            var pg = parseInt(req.query.pg); // Es String !!!
+            if ( req.query.pg == null){ // Puede no venir el param
+                pg = 1;
+            }
+
             var criterio = {"email" : { $in : usuariosSolicitantes} };
-            gestorBD.obtenerUsuarios(criterio, function (usuarios) {
-                var respuesta = swig.renderFile('views/bpeticiones.html',
-                    {
-                        peticiones : usuarios
-                    });
-                res.send(respuesta);
+            gestorBD.obtenerUsuariosPg(criterio, pg, function (usuarios, total) {
+                if (usuarios == null) {
+                    res.send("Error al listar ");
+                }else {
+                    var pgUltima = total/4;
+                    if (total % 4 > 0 ){ // Sobran decimales
+                        pgUltima = pgUltima+1;
+                    }
+                    var respuesta = swig.renderFile('views/bamigos.html',
+                        {
+                            peticiones: usuarios,
+                            pgActual : pg,
+                            pgUltima : pgUltima
+                        });
+                    res.send(respuesta);
+                }
             });
         });
     });
