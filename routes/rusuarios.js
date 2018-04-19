@@ -97,57 +97,73 @@ module.exports = function(app, swig, gestorBD) {
             	{"email" :  {$regex : ".*"+req.query.busqueda+".*"}} ] }
         }
         
+        var pg = parseInt(req.query.pg); // Es String !!!
+		if ( req.query.pg == null){ // Puede no venir el param
+			pg = 1;
+		}
+		
+        gestorBD.obtenerUsuariosPg(criterio, pg, function (usuarios, total) {
+            if (usuarios == null) {
+                res.send("Error al listar ");
+            }else {
+            	
+            	var criterioRelaciones ={
+            			$or: [ {"origen": req.session.usuario },
+            				{"destino": req.session.usuario } ]
+            	}
+            	
+            	gestorBD.obtenerRelaciones(criterioRelaciones, function(relaciones) {
+            		
+            		var emailsEnRelaciones=[];
+            		
+            		for(var i=0;i<relaciones.length;i++){
+            			var origen=relaciones[i].origen;
+            			var destino=relaciones[i].destino;
+            			if(!(contains(emailsEnRelaciones,origen))){
+            				emailsEnRelaciones[emailsEnRelaciones.length] = origen;
+            			}
+            			if(!(contains(emailsEnRelaciones,destino))){
+            				emailsEnRelaciones[emailsEnRelaciones.length] = destino;
+            			}
+            		}
+            		
+            		var nuevosUsuarios = [];
+            		
+            		for(var i=0;i<usuarios.length;i++){
+            			var usuario ={
+            				_id : usuarios[i]._id,
+            				email : usuarios[i].email,
+            				name : usuarios[i].name,
+            				tieneRelacion : false
+            			}
+            			
+            			if(contains(emailsEnRelaciones, usuario.email)){
+            				usuario.tieneRelacion=true;
+            			}
+            			
+            			nuevosUsuarios[i]=usuario;
+            			
+            		}
+            		
+            		var pgUltima = total/4;
+                    if (total % 4 > 0 ){ // Sobran decimales
+                    	pgUltima = pgUltima+1;
+                    }
+                    
+            		var respuesta = swig.renderFile('views/busuarios.html',
+                                {
+            						nuevosUsuarios : nuevosUsuarios,
+    								enSesion : req.session.usuario,
+    								pgActual : pg,
+    								pgUltima : pgUltima
+                                });
+                    res.send(respuesta);
+            		
+            	
+            	});
+            }
+    	});
         
-        gestorBD.obtenerUsuarios(criterio, function(usuarios) {
-        	
-        	var criterioRelaciones ={
-        			$or: [ {"origen": req.session.usuario },
-        				{"destino": req.session.usuario } ]
-        	}
-        	
-        	gestorBD.obtenerRelaciones(criterioRelaciones, function(relaciones) {
-        		
-        		var emailsEnRelaciones=[];
-        		
-        		for(var i=0;i<relaciones.length;i++){
-        			var origen=relaciones[i].origen;
-        			var destino=relaciones[i].destino;
-        			if(!(contains(emailsEnRelaciones,origen))){
-        				emailsEnRelaciones[emailsEnRelaciones.length] = origen;
-        			}
-        			if(!(contains(emailsEnRelaciones,destino))){
-        				emailsEnRelaciones[emailsEnRelaciones.length] = destino;
-        			}
-        		}
-        		
-        		var nuevosUsuarios = [];
-        		
-        		for(var i=0;i<usuarios.length;i++){
-        			var usuario ={
-        				_id : usuarios[i]._id,
-        				email : usuarios[i].email,
-        				name : usuarios[i].name,
-        				tieneRelacion : false
-        			}
-        			
-        			if(contains(emailsEnRelaciones, usuario.email)){
-        				usuario.tieneRelacion=true;
-        			}
-        			
-        			nuevosUsuarios[i]=usuario;
-        			
-        		}
-        			
-        		var respuesta = swig.renderFile('views/busuarios.html',
-                            {
-        						nuevosUsuarios : nuevosUsuarios,
-								enSesion : req.session.usuario
-                            });
-                res.send(respuesta);
-        		
-        	
-        	});
-        });
 	});
 	
 	function contains(lista, email){
