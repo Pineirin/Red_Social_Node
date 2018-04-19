@@ -48,7 +48,10 @@ module.exports = function(app, swig, gestorBD) {
 	});
 	
 	app.get("/identificarse", function(req, res) {
-		var respuesta = swig.renderFile('views/bidentificacion.html', {});
+		var respuesta = swig.renderFile('views/bidentificacion.html',
+			{
+                enSesion : req.session.usuario
+			});
 		res.send(respuesta);
 	});
 
@@ -74,7 +77,10 @@ module.exports = function(app, swig, gestorBD) {
 	
 	
 	app.get("/registrarse", function(req, res) {
-		var respuesta = swig.renderFile('views/bregistro.html', {});
+		var respuesta = swig.renderFile('views/bregistro.html',
+			{
+                enSesion : req.session.usuario
+			});
 		res.send(respuesta);
 	});
 	
@@ -135,7 +141,7 @@ module.exports = function(app, swig, gestorBD) {
         		var respuesta = swig.renderFile('views/busuarios.html',
                             {
         						nuevosUsuarios : nuevosUsuarios,
-                                usuarioEnSesion : req.session.usuario
+								enSesion : req.session.usuario
                             });
                 res.send(respuesta);
         		

@@ -53,6 +53,7 @@ module.exports = function(app, swig, gestorBD) {
                     }
                     var respuesta = swig.renderFile('views/bpeticiones.html',
                         {
+                            enSesion : req.session.usuario,
                             peticiones: usuarios,
                             pgActual : pg,
 							 pgUltima : pgUltima
@@ -92,6 +93,7 @@ module.exports = function(app, swig, gestorBD) {
                     }
                     var respuesta = swig.renderFile('views/bamigos.html',
                         {
+                            enSesion : req.session.usuario,
                             peticiones: usuarios,
                             pgActual : pg,
                             pgUltima : pgUltima
