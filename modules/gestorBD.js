@@ -119,4 +119,24 @@ module.exports = {
 		});
 	},
 	
+	actualizarRelacion : function(criterio, relacion, funcionCallback) {
+		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
+			if (err) {
+				funcionCallback(null);
+			} else {
+				var collection = db.collection('relaciones');
+				collection.update(criterio, {
+					$set : relacion
+				}, function(err, result) {
+					if (err) {
+						funcionCallback(null);
+					} else {
+						funcionCallback(result);
+					}
+					db.close();
+				});
+			}
+		});
+	},
+	
 };

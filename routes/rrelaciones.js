@@ -103,4 +103,37 @@ module.exports = function(app, swig, gestorBD) {
             });
         });
     });
+    
+    app.get('/relacion/aceptar/:id', function (req, res) {
+				
+    	var criterioOrigen = {
+				"_id" : gestorBD.mongo.ObjectID(req.params.id)
+		};
+		
+		gestorBD.obtenerUsuarios(criterioOrigen, function(usuarios) {
+			
+				var criterio = {
+					"origen" : usuarios[0].email,
+					"destino" : req.session.usuario
+				};
+				
+				gestorBD.obtenerRelaciones(criterio, function(relaciones) {
+						
+						var relacion=relaciones[0];
+						
+						relacion.estado="ACEPTADA";
+
+						gestorBD.actualizarRelacion(criterio, relacion, function(result) {
+							if (result == null) {
+								res.redirect("/relaciones/solicitadas?mensaje=Error al aceptar peticion");
+							} else {
+								res.redirect("/relaciones/solicitadas?mensaje=Se ha aceptado la petición correctamente");
+							}
+							
+					});
+				});
+		});
+			
+
+    });
 };
