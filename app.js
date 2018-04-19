@@ -48,7 +48,7 @@ routerUsuarioSession.use(function(req, res, next) {
 // Aplicar routerUsuarioSession -> para proihibir o dejar entrar en una determinada página
 //en cada una de estas páginas se aplica el routerUsuarioSession
 app.use("/usuarios",routerUsuarioSession);
-app.use("/peticiones",routerUsuarioSession);
+app.use("/relaciones/*",routerUsuarioSession);
 
 //se declara que estamos permitiendo el acceso a ficheros estaticos
 //en la carpeta "public
@@ -67,7 +67,7 @@ app.set('crypto',crypto);//referencia al módulo crypto
 
 require("./routes/rhome.js")(app, swig);
 require("./routes/rusuarios.js")(app, swig, gestorBD);
-require("./routes/rpeticiones.js")(app, swig, gestorBD);
+require("./routes/rrelaciones.js")(app, swig, gestorBD);
 
 //lanzar el servidor
 app.listen(app.get('port'), function() {
