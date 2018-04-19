@@ -94,7 +94,7 @@ module.exports = function(app, swig, gestorBD) {
                     var respuesta = swig.renderFile('views/bamigos.html',
                         {
                             enSesion : req.session.usuario,
-                            peticiones: usuarios,
+                            amigos: usuarios,
                             pgActual : pg,
                             pgUltima : pgUltima
                         });
