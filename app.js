@@ -2,6 +2,9 @@
 var express = require('express');//te traes el módulo (una función o un objeto) express (función)
 var app = express();//creamos una nueva aplicacion express y la guardamos
 
+var jwt = require('jsonwebtoken');
+app.set('jwt',jwt);
+
 //Uso del módulo de la sesion
 var expressSession = require('express-session');
 app.use(expressSession({
@@ -68,6 +71,7 @@ app.set('crypto',crypto);//referencia al módulo crypto
 require("./routes/rhome.js")(app, swig);
 require("./routes/rusuarios.js")(app, swig, gestorBD);
 require("./routes/rrelaciones.js")(app, swig, gestorBD);
+require("./routes/rapiusuarios.js")(app, gestorBD);
 
 //lanzar el servidor
 app.listen(app.get('port'), function() {
