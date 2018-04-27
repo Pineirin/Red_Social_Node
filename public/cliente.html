@@ -1,0 +1,45 @@
+
+<title>jQuery uoMusic</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script 
+	src="/js/cookie.js"></script>
+
+</head>
+<!-- Contenido -->
+<div class="container" id="contenedor-principal">
+	<!-- id para identificar -->
+</div>
+<script>
+	var token;
+	var URLbase = "http://localhost:8081/api";
+	$("#contenedor-principal").load("widget-login.html");
+	
+	function widgetCanciones(){
+		 $( "#contenedor-principal" ).load( "widget-canciones.html");
+		 if ( Cookies.get('token') != null ){
+			 token = Cookies.get('token');
+
+			var url = new URL(window.location.href);
+			var w = url.searchParams.get("w");
+			console.log(w);
+			switch (w) {
+			case "login":
+				$("#contenedor-principal").load("widget-login.html");
+				break;
+			case "mensaje":
+				$("#contenedor-principal").load("widget-mensaje.html");
+				break;
+			default:
+				$("#contenedor-principal").load("widget-canciones.html");
+			}
+		}
+	}
+</script>
+</body>
