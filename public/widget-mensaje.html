@@ -1,11 +1,4 @@
-<div id="widget-agregar" >
-<div class="form-group">
- <label class="control-label col-sm-2" for="agregar-destinatario">Destinatario:</label>
- <div class="col-sm-10">
- <input type="text" class="form-control" name="agregar-destinatario"
- placeholder="Destinatario del mensaje" id="agregar-destinatario" />
- </div>
- </div>
+<div id="widget-mensaje" >
 <div class="form-group">
  <label class="control-label col-sm-2" for="agregar-texto">Texto:</label>
  <div class="col-sm-10">
@@ -24,11 +17,10 @@
 function agregarMensaje( ) {
 window.history.pushState("", "", "/cliente.html?w=mensaje");
  $.ajax({
- url: URLbase + "/mensaje",
+ url: URLbase + "/mensaje",//¿como se pasa aqui el email del usuario que se ha clicado?
  type: "POST",
  data: {
- nombre : $("#agregar-destinatario").val(),
- genero : $("#agregar-texto").val(),
+ texto : $("#agregar-texto").val(),
  },
  dataType: 'json',
  headers: { "token": token },
