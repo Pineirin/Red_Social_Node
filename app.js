@@ -72,6 +72,7 @@ require("./routes/rhome.js")(app, swig);
 require("./routes/rusuarios.js")(app, swig, gestorBD);
 require("./routes/rrelaciones.js")(app, swig, gestorBD);
 require("./routes/rapiusuarios.js")(app, gestorBD);
+require("./routes/rapimensajes.js")(app, gestorBD);
 
 //lanzar el servidor
 app.listen(app.get('port'), function() {
