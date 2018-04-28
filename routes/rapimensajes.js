@@ -5,20 +5,28 @@ module.exports = function(app, swig, gestorBD) {
 		 var destinatario = req.params.destinatario;
 		 var texto = req.body.texto;
 
-		 var criterio = {
-				 origen : req.session.usuario,//¿?¿Sacar email de usuario en sesión?
-				 destino : destinatario
+		 var mensaje = {
+				 emisor : req.session.usuario,//¿?¿Sacar email de usuario en sesión?
+				 destino : destinatario,
+				 texto : texto,
+				 leido : false
 		 }
 		 
-		 gestorBD.obtenerRelaciones(criterio, function(relaciones) {
-	            if (relaciones == null || relaciones.length == 0) {
-	                res.status(401);
-	                res.json({error : "No son amigos"});
-	            } else {
-	            	res.json({mensaje : "Son amigos"});
-	            	//Insertar mensaje
-	            }
-	     });
+		 gestorBD.insertarMensaje(mensaje, function(id){
+			 if (id == null) {
+				 res.status(500);
+				 res.json({
+					 error : "se ha producido un error al mandar el mensaje"})
+			 } else {
+				 res.status(201);
+				 res.json({
+					 mensaje : "Mensaje enviado",
+					 _id : id
+				 })
+			 }
+		 });
+		 
+		
 	});
 	
 	//Ejemplo para el futuro
