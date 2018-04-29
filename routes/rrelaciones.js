@@ -66,7 +66,7 @@ module.exports = function(app, swig, gestorBD) {
 
     app.get('/relaciones/aceptadas', function(req, res){
 
-        var criterio ={ "destino": req.session.usuario , "estado" : "ACEPTADA"};
+        var criterio ={ $or: [ {"destino": req.session.usuario , "estado" : "ACEPTADA"}, {"origen": req.session.usuario , "estado" : "ACEPTADA"} ]};
 
         gestorBD.obtenerRelaciones(criterio, function(relaciones) {
             var peticiones=[];
@@ -74,7 +74,12 @@ module.exports = function(app, swig, gestorBD) {
 
             var usuariosSolicitantes = [];
             for(var i=0;i<relaciones.length;i++){
-                usuariosSolicitantes.push(relaciones[i].origen);
+                if (relaciones[i].destino == req.session.usuario) {
+                    usuariosSolicitantes.push(relaciones[i].origen);
+                }
+                if (relaciones[i].origen == req.session.usuario){
+                    usuariosSolicitantes.push(relaciones[i].destino);
+                }
             }
 
             var pg = parseInt(req.query.pg); // Es String !!!
