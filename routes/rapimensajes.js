@@ -5,26 +5,36 @@ module.exports = function(app, swig, gestorBD) {
 		 var destinatario = req.params.destinatario;
 		 var texto = req.body.texto;
 		 
-		 var mensaje = {
-				 emisor : req.session.usuario,//¿?¿Sacar email de usuario en sesión?
-				 destino : destinatario,
-				 texto : texto,
-				 leido : false
-		 }
-		 
-		 gestorBD.insertarMensaje(mensaje, function(id){
-			 if (id == null) {
-				 res.status(500);
-				 res.json({
-					 error : "se ha producido un error al mandar el mensaje"})
-			 } else {
-				 res.status(201);
-				 res.json({
-					 mensaje : "Mensaje enviado",
-					 _id : id
-				 })
-			 }
-		 });
+		 var criterioAmigos ={ $or: [ {"destino": res.usuario , "origen":destinatario ,"estado" : "ACEPTADA"}, {"origen": res.usuario , "destino": destinatario, "estado" : "ACEPTADA"} ]};
+
+	     gestorBD.obtenerRelaciones(criterioAmigos, function(relaciones) {
+	         if(relaciones==null || relaciones.length==0){
+	        	 res.status(500);
+	        	 res.json({error : "No eres amigo del usuario destinatario"})
+	         }
+	         else{
+	        	 var mensaje = {
+	    				 emisor : res.usuario,
+	    				 destino : destinatario,
+	    				 texto : texto,
+	    				 leido : false
+	    		 }
+	    		 
+	    		 gestorBD.insertarMensaje(mensaje, function(id){
+	    			 if (id == null) {
+	    				 res.status(500);
+	    				 res.json({
+	    					 error : "se ha producido un error al mandar el mensaje"})
+	    			 } else {
+	    				 res.status(201);
+	    				 res.json({
+	    					 mensaje : "Mensaje enviado",
+	    					 _id : id
+	    				 })
+	    			 }
+	    		 });
+	         }
+	     });
 		 
 		
 	});
