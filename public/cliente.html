@@ -22,11 +22,7 @@
 	$("#contenedor-principal").load("widget-login.html");
 
     function widgetAmigos(){
-        $( "#contenedor-principal" ).load( "widget-amigos.html");
-    }
-
-    function widgetCanciones(){
-		 $( "#contenedor-principal" ).load( "widget-canciones.html");
+		 $( "#contenedor-principal" ).load( "widget-amigos.html");
 		 if ( Cookies.get('token') != null ){
 			 token = Cookies.get('token');
 
@@ -41,7 +37,7 @@
 				$("#contenedor-principal").load("widget-mensaje.html");
 				break;
 			default:
-				$("#contenedor-principal").load("widget-canciones.html");
+				$("#contenedor-principal").load("widget-amigos.html");
 			}
 		}
 	}

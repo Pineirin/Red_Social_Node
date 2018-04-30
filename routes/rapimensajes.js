@@ -39,6 +39,33 @@ module.exports = function(app, swig, gestorBD) {
 		
 	});
 	
+	app.get("/api/conversacion/:destinatario", function(req, res) {//Se puede haccer esto en un post?
+		 
+		 var destinatario = req.params.destinatario;
+		 var texto = req.body.texto;
+		 
+		 var criterioMensaje ={ $or: [ {"emisor": res.usuario , "destino":destinatario}, {"destino": res.usuario , "emisor": destinatario} ]};
+
+	     gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
+	         if(mensajes==null){
+	        	 res.status(500);
+	        	 res.json({error : "Error al ver los mensajes"})
+	         }
+	         else if(mensajes.length==0){
+	        	 res.status(200);
+	        	 res.json({error : "No hay mensajes todavía"})
+	         }
+	         else{
+	        	 res.status(200);
+	        	 res.send( JSON.stringify(mensajes) );
+	    	}
+	     });
+		 
+		
+	});
+	
+	
+	
 	//Ejemplo para el futuro
 	 /*app.post("/api/cancion", function(req, res) {
 		 var cancion = {
