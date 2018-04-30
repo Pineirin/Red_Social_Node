@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
 });
 
 
-    var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');
 app.set('jwt',jwt);
 
 //Uso del módulo de la sesion

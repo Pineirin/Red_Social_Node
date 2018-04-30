@@ -20,8 +20,12 @@
 	var token;
 	var URLbase = "http://localhost:8081/api";
 	$("#contenedor-principal").load("widget-login.html");
-	
-	function widgetCanciones(){
+
+    function widgetCanciones(){
+        $( "#contenedor-principal" ).load( "widget-canciones.html");
+    }
+
+    function widgetCanciones(){
 		 $( "#contenedor-principal" ).load( "widget-canciones.html");
 		 if ( Cookies.get('token') != null ){
 			 token = Cookies.get('token');
