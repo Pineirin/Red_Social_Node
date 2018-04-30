@@ -11,7 +11,7 @@ module.exports = function(app, swig, gestorBD) {
 		 var criterio = {
 				 email : email,
 				 password : seguro
-		 }
+		 };
 		 
 		 gestorBD.obtenerUsuarios(criterio, function(usuarios) {
 	            if (usuarios == null || usuarios.length == 0) {
@@ -26,5 +26,38 @@ module.exports = function(app, swig, gestorBD) {
 	            }
 	     });
 	});
-	
+
+    app.get("/api/amigos", function(req, res) {
+        var criterio ={ $or: [ {"destino": req.session.usuario , "estado" : "ACEPTADA"}, {"origen": req.session.usuario , "estado" : "ACEPTADA"} ]};
+
+        gestorBD.obtenerRelaciones(criterio, function(relaciones) {
+            var peticiones=[];
+
+
+            var usuariosSolicitantes = [];
+            for(var i=0;i<relaciones.length;i++){
+                if (relaciones[i].destino == req.session.usuario) {
+                    usuariosSolicitantes.push(relaciones[i].origen);
+                }
+                if (relaciones[i].origen == req.session.usuario){
+                    usuariosSolicitantes.push(relaciones[i].destino);
+                }
+            }
+
+
+            var criterio = {"email" : { $in : usuariosSolicitantes} };
+            gestorBD.obtenerUsuarios(criterio, function (usuarios) {
+                if (usuarios == null) {
+                    res.status(500);
+                    res.json({
+						error : "se ha producido un error"
+                    });
+                }else {
+                    res.status(200);
+                    res.send( JSON.stringify(usuarios) );
+                }
+            });
+        });
+    });
+
 };
