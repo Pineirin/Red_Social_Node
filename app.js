@@ -52,7 +52,7 @@ routerUsuarioToken.use(function(req, res, next) {    // obtener el token, puede 
 	var token = req.body.token || req.query.token || req.headers['token'];
 	if (token != null) {        // verificar el token
 		jwt.verify(token, 'secreto', function(err, infoToken) {
-			if (err || (Date.now()/1000 - infoToken.tiempo) > 240 ){
+			if (err || (Date.now()/1000 - infoToken.tiempo) > 500 ){
 				res.status(403); // Forbidden
 				res.json({
 					acceso : false,
@@ -74,7 +74,7 @@ routerUsuarioToken.use(function(req, res, next) {    // obtener el token, puede 
 });
 
 // Aplicar routerUsuarioToken
-app.use('/api/cancion', routerUsuarioToken);
+app.use('/api/amigos', routerUsuarioToken);
 
 //routerUsuarioSession
 var routerUsuarioSession = express.Router();

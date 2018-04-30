@@ -4,7 +4,7 @@ module.exports = function(app, swig, gestorBD) {
 		 
 		 var destinatario = req.params.destinatario;
 		 var texto = req.body.texto;
-
+		 
 		 var mensaje = {
 				 emisor : req.session.usuario,//¿?¿Sacar email de usuario en sesión?
 				 destino : destinatario,
