@@ -64,6 +64,46 @@ module.exports = function(app, swig, gestorBD) {
 		
 	});
 	
+	app.put("/api/conversacion/leer/mensaje/:id", function(req, res) {
+		 
+		 var criterioMensaje ={ 
+				 "_id" :  gestorBD.mongo.ObjectID(req.params.id),
+				 "destino" : res.usuario
+		 };
+		 
+		 console.log("id:" + req.params.id);
+		 console.log("usuario en sesion" + res.usuario);
+		 
+		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
+	         var mensaje = mensajes[0];
+	         console.log(mensaje);
+	         if(mensaje!=null){
+	        	 mensaje.leido=true;
+	        	 gestorBD.actualizarMensaje(criterioMensaje, mensaje, function(result) {
+	    			 if (result == null) {
+	    				res.status(500);
+	    				res.json({
+	    					error : "Se ha producido un error al leer el mensaje"
+	    				})
+	    			} else {
+	    				res.status(200);
+	    				res.json({
+	    					mensaje : "Mensaje modificado",
+	    					_id : req.params.id
+	    				})
+	    			}
+	    		});
+	         }
+	         else{
+	        	 res.status(500);
+ 				 res.json({
+ 					error : "No se ha podido leer el mensaje correctamente"
+ 				})
+	         }
+	     });
+		
+	});
+	
 	
 	
 	//Ejemplo para el futuro
