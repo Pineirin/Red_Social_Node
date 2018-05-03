@@ -71,12 +71,8 @@ module.exports = function(app, swig, gestorBD) {
 				 "destino" : res.usuario
 		 };
 		 
-		 console.log("id:" + req.params.id);
-		 console.log("usuario en sesion" + res.usuario);
-		 
 		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
 	         var mensaje = mensajes[0];
-	         console.log(mensaje);
 	         if(mensaje!=null){
 	        	 mensaje.leido=true;
 	        	 gestorBD.actualizarMensaje(criterioMensaje, mensaje, function(result) {
