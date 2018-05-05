@@ -70,7 +70,6 @@
         for (i = 0; i < mensajesAMostrar.length; i++) {
             if (emailUsuarioSeleccionado == mensajesAMostrar[i].emisor) {
                 if (!mensajesAMostrar[i].leido) {
-
 					leerMensaje(mensajesAMostrar[i]._id)
                 }
             	$("#tablaCuerpo").append(
@@ -114,5 +113,5 @@
 
     setInterval(function () {
         	cargarMensajes();
-        }, 10000);
+        }, 1000);
 </script>
