@@ -24,8 +24,6 @@
 	
 window.history.pushState("", "", "/cliente.html?w=amigos");
 
-    var numMensajes;
-
     function cargarAmigos(){
         $.ajax({
             url: URLbase + "/amigos",
@@ -73,6 +71,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
         $( "#tablaCuerpo" ).empty(); // Vaciar la tabla
         for (i = 0; i < amigosMostrar.length; i++) {
             $( "#tablaCuerpo" ).append(
+                numMensajes = "por arreglar"
                 "<tr id="+amigosMostrar[i]._id+">"+
                 "<td><a onclick=mensaje('" + amigosMostrar[i].email
 				+ "')>"+amigosMostrar[i].email+"</a><br></td>" +
