@@ -47,17 +47,19 @@
     function leerMensaje(id) {
 
         $.ajax({
-            url : URLbase + "/api/conversacion/leer/mensaje/" + id,//¿como se pasa aqui el email del usuario que se ha clicado?
+            url : URLbase + "/conversacion/leer/mensaje/" + id,
             type : "PUT",
             data : {},
             dataType : 'json',
             headers : {
                 "token" : token
             },
+
             success : function(respuesta) {
                 console.log(respuesta);
             },
             error : function(error) {
+                console.log(URLbase + "/api/conversacion/leer/mensaje/" + id);
                 $("#contenedor-principal").load("widget-login.html");
             }
         });
@@ -65,11 +67,11 @@
 
 	function actualizarTabla(mensajesAMostrar){
         $( "#tablaCuerpo" ).empty(); // Vaciar la tabla
-		console.log("1");
         for (i = 0; i < mensajesAMostrar.length; i++) {
             if (emailUsuarioSeleccionado == mensajesAMostrar[i].emisor) {
                 if (!mensajesAMostrar[i].leido) {
-                    leerMensaje(mensajesAMostrar[i]._id)
+
+					leerMensaje(mensajesAMostrar[i]._id)
                 }
             	$("#tablaCuerpo").append(
                 	"<div class='well' align = 'left'>" + mensajesAMostrar[i].emisor + " dice:<br>" + mensajesAMostrar[i].texto + "</div>");
@@ -112,5 +114,5 @@
 
     setInterval(function () {
         	cargarMensajes();
-        }, 1000);
+        }, 10000);
 </script>
