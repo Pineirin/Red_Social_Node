@@ -24,7 +24,7 @@
 	
 window.history.pushState("", "", "/cliente.html?w=amigos");
 
-    var canciones;
+    var numMensajes;
 
     function cargarAmigos(){
         $.ajax({
@@ -55,16 +55,16 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
             success : function(respuesta) {
                 counter = 0;
                 for (i=0; i< respuesta.length; i++){
-                    if (!respuesta[i].leido) {
+                    if (!respuesta[i].leido && respuesta[i].origen == email) {
                         counter++;
                     }
                 }
                 console.log(counter);
-                return counter;
-
+                numMensajes = counter;
+                console.log(numMensajes);
             },
             error : function(error) {
-            $("#contenedor-principal").load("widget-login.html");
+                $("#contenedor-principal").load("widget-login.html");
             }
         });
     }
@@ -77,7 +77,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                 "<td><a onclick=mensaje('" + amigosMostrar[i].email
 				+ "')>"+amigosMostrar[i].email+"</a><br></td>" +
                 "<td>"+amigosMostrar[i].name+"</td>" +
-                "<td>"+cargarMensajes(amigosMostrar[i].email)+"</td>" +
+                "<td>"+numMensajes+"</td>" +
                 "</tr>" );
             // Mucho cuidado con las comillas del eliminarCancion          //la id tiene que ir entre comillas ' '
             }
