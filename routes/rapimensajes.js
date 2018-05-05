@@ -30,7 +30,7 @@ module.exports = function(app, swig, gestorBD) {
 	    				 res.json({
 	    					 mensaje : "Mensaje enviado",
 	    					 _id : id
-	    				 })
+	    				 });
 	    			 }
 	    		 });
 	         }
@@ -80,13 +80,13 @@ module.exports = function(app, swig, gestorBD) {
 	    				res.status(500);
 	    				res.json({
 	    					error : "Se ha producido un error al leer el mensaje"
-	    				})
+	    				});
 	    			} else {
 	    				res.status(200);
 	    				res.json({
 	    					mensaje : "Mensaje modificado",
 	    					_id : req.params.id
-	    				})
+	    				});
 	    			}
 	    		});
 	         }
@@ -94,7 +94,7 @@ module.exports = function(app, swig, gestorBD) {
 	        	 res.status(500);
  				 res.json({
  					error : "No se ha podido leer el mensaje correctamente"
- 				})
+ 				});
 	         }
 	     });
 		

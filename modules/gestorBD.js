@@ -62,26 +62,7 @@ module.exports = {
 			}
 		});
 	},
-	
-	actualizarUsuario : function(criterio, usuario, funcionCallback) {
-		this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
-			if (err) {
-				funcionCallback(null);
-			} else {
-				var collection = db.collection('usuarios');
-				collection.update(criterio, {
-					$set : cancion
-				}, function(err, result) {
-					if (err) {
-						funcionCallback(null);
-					} else {
-						funcionCallback(result);
-					}
-					db.close();
-				});
-			}
-		});
-	},
+
 	
     insertarRelacion : function(relacion, funcionCallback) {
         this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
