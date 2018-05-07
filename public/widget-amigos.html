@@ -58,8 +58,6 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                     }
                 }
                 console.log(counter);
-                numMensajes = counter;
-                console.log(numMensajes);
             },
             error : function(error) {
                 $("#contenedor-principal").load("widget-login.html");
@@ -71,13 +69,11 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
         $( "#tablaCuerpo" ).empty(); // Vaciar la tabla
         for (i = 0; i < amigosMostrar.length; i++) {
             $( "#tablaCuerpo" ).append(
-                numMensajes = "por arreglar"
                 "<tr id="+amigosMostrar[i]._id+">"+
                 "<td><a onclick=mensaje('" + amigosMostrar[i].email
 				+ "')>"+amigosMostrar[i].email+"</a><br></td>" +
                 "<td>"+amigosMostrar[i].name+"</td>" +
-                "<td>"+numMensajes+"</td>" +
-                "</tr>" );
+                "</tr>");
             // Mucho cuidado con las comillas del eliminarCancion          //la id tiene que ir entre comillas ' '
             }
     }
