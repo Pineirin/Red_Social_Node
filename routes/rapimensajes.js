@@ -42,7 +42,6 @@ module.exports = function(app, swig, gestorBD) {
 	app.get("/api/conversacion/:destinatario", function(req, res) {//Se puede haccer esto en un post?
 		 
 		 var destinatario = req.params.destinatario;
-		 var texto = req.body.texto;
 		 
 		 var criterioMensaje ={ $or: [ {"emisor": res.usuario , "destino":destinatario}, {"destino": res.usuario , "emisor": destinatario} ]};
 

@@ -95,7 +95,9 @@
 		$.ajax({
 			url : URLbase + "/mensaje/" + emailUsuarioSeleccionado,//¿como se pasa aqui el email del usuario que se ha clicado?
 			type : "POST",
-			data : {},
+			data: {
+				 texto : $("#agregar-texto").val()
+				 },
 			dataType : 'json',
 			headers : {
 				"token" : token
