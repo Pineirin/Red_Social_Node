@@ -17,7 +17,8 @@ module.exports = function(app, swig, gestorBD) {
 	    				 emisor : res.usuario,
 	    				 destino : destinatario,
 	    				 texto : texto,
-	    				 leido : false
+	    				 leido : false,
+	    				 fecha : new Date()
 	    		 }
 	    		 
 	    		 gestorBD.insertarMensaje(mensaje, function(id){
@@ -99,7 +100,23 @@ module.exports = function(app, swig, gestorBD) {
 		
 	});
 	
-	
+	app.get("/api/mensajes", function(req, res) {
+		 
+		 var criterioMensaje ={ $or: [ {"emisor": res.usuario}, {"destino": res.usuario} ]};
+		 
+		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
+	         if(mensajes==null){
+	        	 res.status(500);
+	        	 res.json({error : "Error al devolver los mensajes"})
+	         }
+	         else{
+	        	 res.status(200);
+	        	 res.send( JSON.stringify(mensajes) );
+	         }
+	         
+	     });
+		
+	});
 	
 	//Ejemplo para el futuro
 	 /*app.post("/api/cancion", function(req, res) {

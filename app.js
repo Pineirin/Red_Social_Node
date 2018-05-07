@@ -77,6 +77,7 @@ routerUsuarioToken.use(function(req, res, next) {    // obtener el token, puede 
 app.use('/api/amigos', routerUsuarioToken);
 app.use('/api/mensaje/*', routerUsuarioToken);
 app.use('/api/conversacion/*', routerUsuarioToken);
+app.use('/api/mensajes', routerUsuarioToken);
 
 //routerUsuarioSession
 var routerUsuarioSession = express.Router();

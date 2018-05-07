@@ -60,5 +60,71 @@ module.exports = function(app, swig, gestorBD) {
             });
         });
     });
+    
+    app.post("/api/amigos", function(req, res) {
+    	
+    	var mensajesOrdenados=req.body.mensajes;
+    	
+        var criterio ={ $or: [ {"destino": res.usuario , "estado" : "ACEPTADA"}, {"origen": res.usuario , "estado" : "ACEPTADA"} ]};
+
+        gestorBD.obtenerRelaciones(criterio, function(relaciones) {
+            var peticiones=[];
+
+
+            var usuariosSolicitantes = [];
+            for(var i=0;i<relaciones.length;i++){
+                if (relaciones[i].destino == res.usuario) {
+                    usuariosSolicitantes.push(relaciones[i].origen);
+                }
+                if (relaciones[i].origen == res.usuario){
+                    usuariosSolicitantes.push(relaciones[i].destino);
+                }
+            }
+
+
+            var criterio = {"email" : { $in : usuariosSolicitantes} };
+            gestorBD.obtenerUsuarios(criterio, function (usuarios) {
+                if (usuarios == null) {
+                    res.status(500);
+                    res.json({
+						error : "se ha producido un error"
+                    });
+                }else {
+                	var usuariosOrdenados=[];
+                	for (var i = 0; i < mensajesOrdenados.length; i++) {
+                		 var criterioMensaje ={ 
+                				 $or: [ {"destino": res.usuario},
+                					 {"emisor": res.usuario} ]
+                				 
+                		 };
+                		 
+                		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
+                			var usuarioAInsertar;
+                			 //console.log(mensajes[0]);
+							if (mensajes[0].emisor == res.usuario) {
+								usuarioAInsertar = mensajes[0].destino;
+							} else {
+								usuarioAInsertar = mensajes[0].emisor;
+							}
+
+							if (usuariosOrdenados.includes(usuarioAInsertar)) {
+
+							} else {
+								usuariosOrdenados.push(usuarioAInsertar);
+								console.log(usuarioAInsertar);
+							}
+							
+                			
+                		 });
+                		 
+					}
+                    res.status(201);
+                    res.send( JSON.stringify(usuarios) );
+                }
+            });
+        });
+    });
+    
+    
 
 };
