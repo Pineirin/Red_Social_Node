@@ -65,6 +65,8 @@ module.exports = function(app, swig, gestorBD) {
     	
     	var mensajesOrdenados=req.body.mensajes;
     	
+    	console.log(mensajesOrdenados);
+    	
         var criterio ={ $or: [ {"destino": res.usuario , "estado" : "ACEPTADA"}, {"origen": res.usuario , "estado" : "ACEPTADA"} ]};
 
         gestorBD.obtenerRelaciones(criterio, function(relaciones) {
@@ -84,42 +86,51 @@ module.exports = function(app, swig, gestorBD) {
 
             var criterio = {"email" : { $in : usuariosSolicitantes} };
             gestorBD.obtenerUsuarios(criterio, function (usuarios) {
+            	
                 if (usuarios == null) {
                     res.status(500);
                     res.json({
 						error : "se ha producido un error"
                     });
                 }else {
+                	var usuariosOrdenadosFinales=[];
+                	var emailOrdenados=[];
                 	var usuariosOrdenados=[];
+                	var usuarioAInsertar;
                 	for (var i = 0; i < mensajesOrdenados.length; i++) {
-                		 var criterioMensaje ={ 
-                				 $or: [ {"destino": res.usuario},
-                					 {"emisor": res.usuario} ]
-                				 
-                		 };
-                		 
-                		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
-                			var usuarioAInsertar;
-                			 //console.log(mensajes[0]);
-							if (mensajes[0].emisor == res.usuario) {
-								usuarioAInsertar = mensajes[0].destino;
+
+							if (mensajesOrdenados[i].emisor == res.usuario) {
+								usuarioAInsertar = mensajesOrdenados[i].destino;
 							} else {
-								usuarioAInsertar = mensajes[0].emisor;
+								usuarioAInsertar = mensajesOrdenados[i].emisor;
 							}
 
-							if (usuariosOrdenados.includes(usuarioAInsertar)) {
+							if (emailOrdenados.includes(usuarioAInsertar)) {
 
 							} else {
-								usuariosOrdenados.push(usuarioAInsertar);
-								console.log(usuarioAInsertar);
+								emailOrdenados.push(usuarioAInsertar);
 							}
 							
-                			
-                		 });
-                		 
-					}
-                    res.status(201);
-                    res.send( JSON.stringify(usuarios) );
+                	}
+
+                	 var criterioUsuario = {"email" : { $in : emailOrdenados} };
+                	 
+					 gestorBD.obtenerUsuarios(criterioUsuario, function (usuariosOrdenadosConMensajes) {
+						 
+						 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario, $in : usuarios}};
+						 
+						 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
+							
+							 usuariosOrdenadosFinales=usuariosOrdenadosConMensajes;
+							 for (var i = 0; i < usuariosSinMensajes.length; i++) {
+								 usuariosOrdenadosFinales.push(usuariosSinMensajes[i]);
+							 }
+							 //console.log(usuariosOrdenadosFinales);
+							 res.status(201);
+			                 res.send( JSON.stringify(usuariosOrdenadosFinales) );
+						 });
+					 });
+					 
                 }
             });
         });
