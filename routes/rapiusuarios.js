@@ -101,48 +101,41 @@ module.exports = function(app, swig, gestorBD) {
 	                	         }
 	                	         else{
 	                	        	 
-	                	        	 var mensajesOrdenados = [];
-	                	        	 for (var i = mensajes.length-1; i >= 0; i--) {
-	                	        		 mensajesOrdenados.push(mensajes[i]);
-	                				}
-	                	        	 
-	                	        	 var usuariosOrdenadosFinales=[];
 	                	        	 var emailOrdenados=[];
-	                	        	 var usuariosOrdenados=[];
 	                	        	 var usuarioAInsertar;
-	                	        	 for (var i = 0; i < mensajesOrdenados.length; i++) {
+	                	        	 for (var i = mensajes.length-1; i >= 0; i--) {
 
-	                	        		 if (mensajesOrdenados[i].emisor == res.usuario) {
-	                	        			 usuarioAInsertar = mensajesOrdenados[i].destino;
+	                	        		 if (mensajes[i].emisor == res.usuario) {
+	                	        			 usuarioAInsertar = mensajes[i].destino;
 	                	        		 } else {
-	                	        			 usuarioAInsertar = mensajesOrdenados[i].emisor;
+	                	        			 usuarioAInsertar = mensajes[i].emisor;
 	                	        		 }
 
-	                	        		 if (emailOrdenados.includes(usuarioAInsertar)) {
-
-	                	        		 } else {
+	                	        		 if (!emailOrdenados.includes(usuarioAInsertar)) {
 	                	        			 emailOrdenados.push(usuarioAInsertar);
 	                	        		 }
 	     							
 	                	        	 }
-							
-	                	        	 var criterioUsuario = {"email" : { $in : emailOrdenados} };
+	                	        	 
+                	        		 var emailsUsuariosAmigos=[]
+                	        		 for (var i = 0; i < usuarios.length; i++) {
+                	        			 emailsUsuariosAmigos.push(usuarios[i].email);
+									 }
+                	        		 
+	                	        	 var criterioUsuario = {"email" : { $in : emailOrdenados, $in : emailsUsuariosAmigos} };
 	                     	 
 	                	        	 gestorBD.obtenerUsuarios(criterioUsuario, function (usuariosOrdenadosConMensajes) {
 	                	        		 
-	                	        		 var emailsUsuarios=[]
-	                	        		 for (var i = 0; i < usuarios.length; i++) {
-	                	        			 emailsUsuarios.push(usuarios[i].email);
-										 }
-	                	        		 
-	                	        		 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario, $in : emailsUsuarios}};
-	                	        		 
+	                	        		 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario, $in : emailsUsuariosAmigos}};
 	                	        		 
 	                	        		 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
+	                	        			 
+	                	        			 var usuariosOrdenadosFinales=[];
+	                	        			 
 	                	        			 for (var i = 0; i < emailOrdenados.length; i++) {
 	                	        				 for (var j = 0; j < usuariosOrdenadosConMensajes.length; j++) {
 	     									 
-	                	        					 if(usuariosOrdenadosConMensajes[j].email==emailOrdenados[i]){
+	                	        					 if(emailOrdenados[i]==usuariosOrdenadosConMensajes[j].email){
 	                	        						 usuariosOrdenadosFinales.push(usuariosOrdenadosConMensajes[j]);
 	                	        					 }
 	                	        				 }
@@ -151,7 +144,6 @@ module.exports = function(app, swig, gestorBD) {
 	                	        				 usuariosOrdenadosFinales.push(usuariosSinMensajes[i]);
 	                	        			 }
 	                	        			 
-	                	        			
 	                	        			 res.status(200);
 	                	        			 res.send( JSON.stringify(usuariosOrdenadosFinales) );
 	                	        		 });
