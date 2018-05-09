@@ -135,7 +135,6 @@ module.exports = function(app, swig, gestorBD) {
 	                	        		 
 	                	        		 
 	                	        		 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
-	                	        			 console.log(usuariosSinMensajes);
 	                	        			 for (var i = 0; i < emailOrdenados.length; i++) {
 	                	        				 for (var j = 0; j < usuariosOrdenadosConMensajes.length; j++) {
 	     									 
