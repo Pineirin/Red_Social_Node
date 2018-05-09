@@ -63,26 +63,11 @@ module.exports = function(app, swig, gestorBD) {
     
     app.get("/api/amigos", function(req, res) {
     	
-    	var criterioMensaje ={ $or: [ {"emisor": res.usuario}, {"destino": res.usuario} ]};
-		 
-		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
-	         if(mensajes==null){
-	        	 res.status(500);
-	        	 res.json({error : "Error al devolver los mensajes"})
-	         }
-	         else{
-	        	 
-	        	 var mensajesOrdenados = [];
-	        	 for (var i = mensajes.length-1; i >= 0; i--) {
-	        		 mensajesOrdenados.push(mensajes[i]);
-				}
-	        	 
-	             var criterio ={ $or: [ {"destino": res.usuario , "estado" : "ACEPTADA"}, {"origen": res.usuario , "estado" : "ACEPTADA"} ]};
+    	
+	        	 var criterio ={ $or: [ {"destino": res.usuario , "estado" : "ACEPTADA"}, {"origen": res.usuario , "estado" : "ACEPTADA"} ]};
 
 	             gestorBD.obtenerRelaciones(criterio, function(relaciones) {
-	                 var peticiones=[];
-
-
+	            	 
 	                 var usuariosSolicitantes = [];
 	                 for(var i=0;i<relaciones.length;i++){
 	                     if (relaciones[i].destino == res.usuario) {
@@ -102,59 +87,81 @@ module.exports = function(app, swig, gestorBD) {
 	     						error : "se ha producido un error"
 	                         });
 	                     }else {
-	                     	var usuariosOrdenadosFinales=[];
-	                     	var emailOrdenados=[];
-	                     	var usuariosOrdenados=[];
-	                     	var usuarioAInsertar;
-	                     	for (var i = 0; i < mensajesOrdenados.length; i++) {
+	                    	 
+	                    	 var criterioMensaje ={ $or: [ {"emisor": res.usuario}, {"destino": res.usuario} ]};
+	                		 
+	                		 gestorBD.obtenerMensajes(criterioMensaje, function(mensajes) {
+	                	         if(mensajes==null){
+	                	        	 res.status(500);
+	                	        	 res.json({error : "Error al devolver los mensajes"})
+	                	         }
+	                	         else if(mensajes.length==0){
+	                	        	 res.status(200);
+            	        			 res.send( JSON.stringify(usuarios) );
+	                	         }
+	                	         else{
+	                	        	 
+	                	        	 var mensajesOrdenados = [];
+	                	        	 for (var i = mensajes.length-1; i >= 0; i--) {
+	                	        		 mensajesOrdenados.push(mensajes[i]);
+	                				}
+	                	        	 
+	                	        	 var usuariosOrdenadosFinales=[];
+	                	        	 var emailOrdenados=[];
+	                	        	 var usuariosOrdenados=[];
+	                	        	 var usuarioAInsertar;
+	                	        	 for (var i = 0; i < mensajesOrdenados.length; i++) {
 
-	     							if (mensajesOrdenados[i].emisor == res.usuario) {
-	     								usuarioAInsertar = mensajesOrdenados[i].destino;
-	     							} else {
-	     								usuarioAInsertar = mensajesOrdenados[i].emisor;
-	     							}
+	                	        		 if (mensajesOrdenados[i].emisor == res.usuario) {
+	                	        			 usuarioAInsertar = mensajesOrdenados[i].destino;
+	                	        		 } else {
+	                	        			 usuarioAInsertar = mensajesOrdenados[i].emisor;
+	                	        		 }
 
-	     							if (emailOrdenados.includes(usuarioAInsertar)) {
+	                	        		 if (emailOrdenados.includes(usuarioAInsertar)) {
 
-	     							} else {
-	     								emailOrdenados.push(usuarioAInsertar);
-	     							}
+	                	        		 } else {
+	                	        			 emailOrdenados.push(usuarioAInsertar);
+	                	        		 }
 	     							
-	                     	}
+	                	        	 }
 							
-	                     	 var criterioUsuario = {"email" : { $in : emailOrdenados} };
+	                	        	 var criterioUsuario = {"email" : { $in : emailOrdenados} };
 	                     	 
-	     					 gestorBD.obtenerUsuarios(criterioUsuario, function (usuariosOrdenadosConMensajes) {
+	                	        	 gestorBD.obtenerUsuarios(criterioUsuario, function (usuariosOrdenadosConMensajes) {
 	     						 
-	     						 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario, $in : usuarios}};
-	     						 
-	     						 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
-	     							 
-	     							 for (var i = 0; i < emailOrdenados.length; i++) {
-	     								 for (var j = 0; j < usuariosOrdenadosConMensajes.length; j++) {
+	                	        		 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario}};
+	                	        		 
+	                	        		 
+	                	        		 
+	                	        		 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
+	                	        			 console.log(usuariosSinMensajes);
+	                	        			 for (var i = 0; i < emailOrdenados.length; i++) {
+	                	        				 for (var j = 0; j < usuariosOrdenadosConMensajes.length; j++) {
 	     									 
-	     									if(usuariosOrdenadosConMensajes[j].email==emailOrdenados[i]){
-												usuariosOrdenadosFinales.push(usuariosOrdenadosConMensajes[j]);
-											}
-										}
-									 }
-	     							 for (var i = 0; i < usuariosSinMensajes.length; i++) {
-	     								usuariosOrdenadosFinales.push(usuariosSinMensajes[i]);
-	     							 }
-	     							
-	     							 res.status(200);
-	     			                 res.send( JSON.stringify(usuariosOrdenadosFinales) );
-	     						 });
-	     					 });
+	                	        					 if(usuariosOrdenadosConMensajes[j].email==emailOrdenados[i]){
+	                	        						 usuariosOrdenadosFinales.push(usuariosOrdenadosConMensajes[j]);
+	                	        					 }
+	                	        				 }
+	                	        			 }
+	                	        			 for (var i = 0; i < usuariosSinMensajes.length; i++) {
+	                	        				 usuariosOrdenadosFinales.push(usuariosSinMensajes[i]);
+	                	        			 }
+	                	        			 
+	                	        			
+	                	        			 res.status(200);
+	                	        			 res.send( JSON.stringify(usuariosOrdenadosFinales) );
+	                	        		 });
+	                	        	 });
 	     					 
+	                	         }
+	                		 });
 	                     }
-	                 });
 	             });
-	         }
+	                 
+	         });
 	         
 	     });
-    	
-    });
     
     
 
