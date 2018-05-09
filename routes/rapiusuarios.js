@@ -129,9 +129,13 @@ module.exports = function(app, swig, gestorBD) {
 	                	        	 var criterioUsuario = {"email" : { $in : emailOrdenados} };
 	                     	 
 	                	        	 gestorBD.obtenerUsuarios(criterioUsuario, function (usuariosOrdenadosConMensajes) {
-	     						 
-	                	        		 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario}};
 	                	        		 
+	                	        		 var emailsUsuarios=[]
+	                	        		 for (var i = 0; i < usuarios.length; i++) {
+	                	        			 emailsUsuarios.push(usuarios[i].email);
+										 }
+	                	        		 
+	                	        		 var criterioUsuarioSinMensajes = {"email" : { $nin : emailOrdenados, $ne : res.usuario, $in : emailsUsuarios}};
 	                	        		 
 	                	        		 
 	                	        		 gestorBD.obtenerUsuarios(criterioUsuarioSinMensajes, function (usuariosSinMensajes) {
