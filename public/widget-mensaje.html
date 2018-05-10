@@ -73,15 +73,24 @@
 					leerMensaje(mensajesAMostrar[i]._id)
                 }
             	$("#tablaCuerpo").append(
-                	"<div class='well' align = 'left'>" + mensajesAMostrar[i].emisor + " dice:<br>" + mensajesAMostrar[i].texto + "</div>");
+                	"<div class='well' align = 'left'>" 
+                		+ "<div>" + mensajesAMostrar[i].emisor + " dice:</div>" 
+                		+ "<div>" + mensajesAMostrar[i].texto + "</div>"
+                	+ "</div>");
         	}
         	else{
                 if (mensajesAMostrar[i].leido) {
                     $("#tablaCuerpo").append(
-                        "<div class='well' align = 'right'>" + mensajesAMostrar[i].texto + "<br>Leído" + "</div>");
+                        "<div class='well' align = 'right'>" 
+                        	+ "<div>" + mensajesAMostrar[i].texto + "</div>"
+                        	+ "<div>Leído</div>" 
+                        + "</div>");
                 }else{
-                    $("#tablaCuerpo").append(
-                        "<div class='well' align = 'right'>" + mensajesAMostrar[i].texto + "<br>No leído" + "</div>");
+                	$("#tablaCuerpo").append(
+                            "<div class='well' align = 'right'>" 
+                            	+ "<div>" + mensajesAMostrar[i].texto + "</div>"
+                            	+ "<div>No leído</div>" 
+                            + "</div>");
 				}
 			}
             // Mucho cuidado con las comillas del eliminarCancion          //la id tiene que ir entre comillas ' '
