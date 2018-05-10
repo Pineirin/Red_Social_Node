@@ -16,7 +16,8 @@
 			<tr>
 				<td>{{ usuario.email}}</td>
 				<td>{{ usuario.name}}</td>
-				<td><a href="/relacion/aceptar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Aceptar invitación</a></td>
+				<td><a href="/relacion/aceptar/{{ usuario._id.toString() }}" class="btn btn-info" role="button"
+				id="acceptPetitionButton{{usuario.email}}" name="acceptPetitionButton{{usuario.email}}">Aceptar invitación</a></td>
 			</tr>
 		{% endfor %}
 		</tbody>

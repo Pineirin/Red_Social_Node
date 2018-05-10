@@ -36,7 +36,8 @@
 				
 				{% if usuario.email!=enSesion %}
 					{% if !usuario.tieneRelacion %}
-						<td><a href="/relaciones/solicitar/{{ usuario._id.toString() }}" class="btn btn-info" role="button">Agregar amigo</a></td>
+						<td><a href="/relaciones/solicitar/{{ usuario._id.toString() }}" class="btn btn-info" role="button" 
+						id="sendPetitionButton{{usuario.email}}" name="sendPetitionButton{{usuario.email}}">Agregar amigo</a></td>
 					{% endif %}		
 				{% endif %}
 		
