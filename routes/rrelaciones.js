@@ -1,4 +1,4 @@
-module.exports = function(app, swig, gestorBD) {
+module.exports = function(app, swig, gestorBD, logger) {
     app.get('/relaciones/solicitar/:id', function (req, res) {
     	
     	var criterioDestino = {
@@ -17,6 +17,7 @@ module.exports = function(app, swig, gestorBD) {
 		            if (id == null) {
 		                res.redirect("/usuarios?mensaje=Error al enviar peticion");
 		            } else {
+		                logger.info("Usuario " + req.session.usuario + " solicitó amistad a usuario "+ usuarios[0].email);
 		            	res.redirect("/usuarios?mensaje=Peticion de amistad enviada");
 		        	}
 		        });
@@ -132,6 +133,7 @@ module.exports = function(app, swig, gestorBD) {
 							if (result == null) {
 								res.redirect("/relaciones/solicitadas?mensaje=Error al aceptar peticion");
 							} else {
+                                logger.info("Usuario " + req.session.usuario + " acepto amistad de usuario "+ usuarios[0].email);
 								res.redirect("/relaciones/solicitadas?mensaje=Se ha aceptado la petición correctamente");
 							}
 							
