@@ -22,12 +22,16 @@
 </div>
 
 <script>
-	
+
 window.history.pushState("", "", "/cliente.html?w=amigos");
 	
 	var usuarios;
 	
     function cargarAmigos(){
+    	var ruta="img/circulo.gif";
+    	var texto="Cargando..."
+    	$( "#imagen" ).append("<img src="+ruta+" alt="+texto+">");
+    	
         $.ajax({
             url: URLbase + "/amigos",
             type: "GET",
@@ -37,6 +41,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
             success: function(respuesta) {
                 usuarios = respuesta;
                 actualizarTabla(usuarios);
+                $( "#imagen" ).empty();
                 },
             error : function (error){
                 $( "#contenedor-principal" ).load("widget-login.html");
@@ -174,5 +179,12 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
 
 
 </script>
+
+<div id="dibujo">
+<div id="imagen" align="center">
+	
+</div>
+</div>
+
 </body>
 </html>

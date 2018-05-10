@@ -26,40 +26,6 @@ module.exports = function(app, swig, gestorBD) {
 	            }
 	     });
 	});
-
-    /*app.get("/api/amigos", function(req, res) {
-    	
-        var criterio ={ $or: [ {"destino": res.usuario , "estado" : "ACEPTADA"}, {"origen": res.usuario , "estado" : "ACEPTADA"} ]};
-
-        gestorBD.obtenerRelaciones(criterio, function(relaciones) {
-            var peticiones=[];
-
-
-            var usuariosSolicitantes = [];
-            for(var i=0;i<relaciones.length;i++){
-                if (relaciones[i].destino == res.usuario) {
-                    usuariosSolicitantes.push(relaciones[i].origen);
-                }
-                if (relaciones[i].origen == res.usuario){
-                    usuariosSolicitantes.push(relaciones[i].destino);
-                }
-            }
-
-
-            var criterio = {"email" : { $in : usuariosSolicitantes} };
-            gestorBD.obtenerUsuarios(criterio, function (usuarios) {
-                if (usuarios == null) {
-                    res.status(500);
-                    res.json({
-						error : "se ha producido un error"
-                    });
-                }else {
-                    res.status(200);
-                    res.send( JSON.stringify(usuarios) );
-                }
-            });
-        });
-    });*/
     
     app.get("/api/amigos", function(req, res) {
     	
