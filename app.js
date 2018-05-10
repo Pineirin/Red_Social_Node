@@ -2,6 +2,15 @@
 var express = require('express');//te traes el módulo (una función o un objeto) express (función)
 var app = express();//creamos una nueva aplicacion express y la guardamos
 
+var log4js = require('log4js');
+
+log4js.configure({
+    appenders: { red_social: { type: 'file', filename: 'red_social.log' } },
+    categories: { default: { appenders: ['red_social'], level: 'info' } }
+});
+
+var logger = log4js.getLogger('red_social');
+
 app.use(function(req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Credentials", "true");
@@ -82,12 +91,10 @@ app.use('/api/mensajes', routerUsuarioToken);
 //routerUsuarioSession
 var routerUsuarioSession = express.Router();
 routerUsuarioSession.use(function(req, res, next) {
-	console.log("routerUsuarioSession");
 	if ( req.session.usuario ) {
 		// dejamos correr la petición
 		next();
 	} else {
-		console.log("va a : "+req.session.destino);
 		res.redirect("/identificarse");
 	}
 });
@@ -112,8 +119,8 @@ app.set('clave','abcdefg');//clave de cifrado
 app.set('crypto',crypto);//referencia al módulo crypto
 
 require("./routes/rhome.js")(app, swig);
-require("./routes/rusuarios.js")(app, swig, gestorBD);
-require("./routes/rrelaciones.js")(app, swig, gestorBD);
+require("./routes/rusuarios.js")(app, swig, gestorBD, logger);
+require("./routes/rrelaciones.js")(app, swig, gestorBD, logger);
 require("./routes/rapiusuarios.js")(app, swig, gestorBD);
 require("./routes/rapimensajes.js")(app, swig, gestorBD);
 

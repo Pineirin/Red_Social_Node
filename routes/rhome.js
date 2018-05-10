@@ -1,4 +1,4 @@
-module.exports = function(app,swig) {
+module.exports = function(app,swig, logger) {
 	
 	app.get("/home", function(req, res) {
 		var respuesta = swig.renderFile('views/bindex.html',

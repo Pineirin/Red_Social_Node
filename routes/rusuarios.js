@@ -1,7 +1,7 @@
 //rusuarios es un módulo al que se le llama
 //con module.exports se declara el módulo
 //se le pasa como parámetro en el constructor la referencia a app
-module.exports = function(app, swig, gestorBD) {
+module.exports = function(app, swig, gestorBD, logger) {
 	
 	app.post('/usuario', function(req, res) {
 		//encriptamos la password
@@ -30,6 +30,7 @@ module.exports = function(app, swig, gestorBD) {
 						if (id == null) {
 							res.redirect("/registrarse?mensaje=Error al registrarse");
 						} else {
+							logger.info("Usuario " + usuario.email + " registrado");
 							res.redirect("/identificarse?mensaje=Nuevo usuario registrado");
 						}
 					});
@@ -70,6 +71,7 @@ module.exports = function(app, swig, gestorBD) {
                 res.redirect("/identificarse" + "?mensaje=Email o password incorrecto" + "&tipoMensaje=alert-danger ");
             } else {
                 req.session.usuario = usuarios[0].email;
+                logger.info("Usuario " + req.session.usuario + " identificado");
                 res.redirect("/usuarios");
             }
         });
@@ -85,9 +87,19 @@ module.exports = function(app, swig, gestorBD) {
 	});
 	
 	app.get('/desconectarse', function (req, res) {
+         logger.info("Usuario " + req.session.usuario + " desconectado");
 		 req.session.usuario = null;
 		 res.redirect("/identificarse");
 	});
+
+    function contains(lista, email){
+        for(var i=0;i<lista.length;i++){
+            if(lista[i]==email){
+                return true;
+            }
+        }
+        return false;
+    }
 
 	app.get('/usuarios', function(req, res){
         var criterio = {};
@@ -165,13 +177,6 @@ module.exports = function(app, swig, gestorBD) {
     	});
         
 	});
-	
-	function contains(lista, email){
-		 for(var i=0;i<lista.length;i++){
-			 if(lista[i]==email){
-				 return true;
-			 }
-		 }
-		 return false;
-	}
+
+
 };
