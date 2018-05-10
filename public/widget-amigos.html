@@ -6,6 +6,7 @@
 </head>
 <body>
 <div id="widget-amigos" >
+    <input type="text"  class="form-control"  placeholder="Filtrar por email" id="filtro-email"/>
     <button class="btn" onclick="cargarAmigos()" >Actualizar</button>
     <table class="table table-hover">
         <thead>
@@ -53,8 +54,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
             headers: { "token": token },
             success: function(respuesta) {
                 for(i=0; i<respuesta.length; i++){
-                    console.log(respuesta[i].email)
-                    cargarNúmeroMensajes(respuesta[i].email);
+                    cargarNúmeroMensajes(respuesta[i]);
                 }
             },
             error : function (error){
@@ -103,9 +103,9 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
         }
     }*/
     
-    function cargarNúmeroMensajes(email) {
+    function cargarNúmeroMensajes(usuario) {
         $.ajax({
-            url : URLbase + "/conversacion/" + email,
+            url : URLbase + "/conversacion/" + usuario.email,
             type : "GET",
             data : {},
             dataType : 'json',
@@ -113,14 +113,16 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                 "token" : token
             },
             success : function(respuesta) {
-                console.log(respuesta);
                 counter = 0;
+
                 for (i=0; i< respuesta.length; i++){
-                    if (!respuesta[i].leido && respuesta[i].origen == email) {
+                    if (!respuesta[i].leido && respuesta[i].emisor == usuario.email) {
                         counter++;
                     }
                 }
-                id = "mensajesAmigo-" + email
+                console.log(counter)
+                id =usuario.name;
+                console.log(id)
                 $( "#" + id).empty();
                 $( "#" + id).append(
                     counter
@@ -141,7 +143,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                 "<td><a onclick=mensaje('" + amigosMostrar[i].email
 				+ "')>"+amigosMostrar[i].email+"</a><br></td>" +
                 "<td>"+amigosMostrar[i].name+"</td>" +
-                "<td id ="+ "mensajesAmigo-" + amigosMostrar[i].email +  ">0</td>" +
+                "<td id ="+ amigosMostrar[i].name + ">0</td>" +
                 "</tr>");
             }
 
@@ -154,12 +156,23 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
 		$( "#contenedor-principal" ).load( "widget-mensaje.html");
 	}
 
+
     setInterval(function () {
         cargarMensajes();
     }, 1000);
 
-    
-    
+
+    $('#filtro-email').on('input',function(e){
+        var usuarioFiltrados = [];
+        var nombreFiltro = $("#filtro-email").val();
+        for (i = 0; i < usuarios.length; i++) {
+            if (usuarios[i].email.indexOf(nombreFiltro) != -1 ){
+                usuarioFiltrados.push(usuarios[i]);
+            }
+        }
+        actualizarTabla(usuarioFiltrados);
+    });
+
 
 </script>
 </body>
