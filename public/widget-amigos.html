@@ -120,8 +120,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                         counter++;
                     }
                 }
-                console.log(counter)
-                id =usuario.name;
+                id ="numeroMensajes-" + usuario._id;
                 console.log(id)
                 $( "#" + id).empty();
                 $( "#" + id).append(
@@ -143,7 +142,7 @@ window.history.pushState("", "", "/cliente.html?w=amigos");
                 "<td><a onclick=mensaje('" + amigosMostrar[i].email
 				+ "')>"+amigosMostrar[i].email+"</a><br></td>" +
                 "<td>"+amigosMostrar[i].name+"</td>" +
-                "<td id ="+ amigosMostrar[i].name + ">0</td>" +
+                "<td id =" + "numeroMensajes-" + amigosMostrar[i]._id + ">0</td>" +
                 "</tr>");
             }
 
