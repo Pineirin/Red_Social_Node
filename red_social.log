@@ -16,6 +16,7 @@
 [2018-05-10T20:17:05.712] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
 [2018-05-10T20:17:09.738] [INFO] red_social - Usuario 77777778A@uniovi.es acepto amistad de usuario adripc@live.com
 [2018-05-10T20:17:12.999] [INFO] red_social - Usuario adripc@live.com identificado
+<<<<<<< HEAD
 [2018-05-11T12:44:11.340] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
 [2018-05-11T12:44:22.258] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
 [2018-05-11T12:44:34.747] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
@@ -27,3 +28,88 @@
 [2018-05-11T12:45:30.573] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
 [2018-05-11T12:45:37.494] [INFO] red_social - Usuario 77777778A@uniovi.es acepto amistad de usuario adripc@live.com
 [2018-05-11T12:45:42.490] [INFO] red_social - Usuario adripc@live.com identificado
+=======
+[2018-05-11T12:51:10.069] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T12:51:16.977] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:51:24.267] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:51:32.613] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:51:40.003] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:51:42.668] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:51:45.032] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:51:51.820] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:51:58.528] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:58:00.353] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T12:58:06.457] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:58:12.753] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:58:20.248] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:58:27.965] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:58:35.203] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T12:58:37.158] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:58:44.385] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T12:58:51.480] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:00:32.639] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:01:25.830] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:01:32.050] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:01:38.654] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:06:34.888] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:06:42.036] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:06:49.134] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:06:56.801] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:07:04.053] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:07:11.259] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:07:13.690] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:10:34.461] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:10:41.224] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:10:48.160] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:12:21.268] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:12:26.641] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:12:31.708] [INFO] red_social - Usuario 77777778A@uniovi.es desconectado
+[2018-05-11T13:12:36.390] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:13:27.073] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:13:33.456] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:13:39.784] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:13:48.148] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:13:54.980] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:14:01.502] [INFO] red_social - Usuario adripc@live.com solicitó amistad a usuario 77777778A@uniovi.es
+[2018-05-11T13:14:03.453] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:14:05.967] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:14:11.686] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:14:16.842] [INFO] red_social - Usuario 77777778A@uniovi.es acepto amistad de usuario adripc@live.com
+[2018-05-11T13:14:20.598] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:36:48.069] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:36:54.048] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:37:00.284] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:37:07.623] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:37:14.196] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:37:21.277] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:37:23.216] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:37:30.390] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:39:07.001] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:39:12.881] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:39:19.129] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:39:26.586] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:39:33.295] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:39:40.185] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:42:32.236] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:42:38.160] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:42:44.397] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:42:51.674] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:42:58.277] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:43:05.026] [INFO] red_social - Usuario adripc@live.com solicitó amistad a usuario 77777778A@uniovi.es
+[2018-05-11T13:43:06.939] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:43:08.890] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:43:13.802] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:43:18.659] [INFO] red_social - Usuario 77777778A@uniovi.es acepto amistad de usuario adripc@live.com
+[2018-05-11T13:43:21.640] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:49:24.487] [INFO] red_social - Usuario 77777778A@uniovi.es registrado
+[2018-05-11T13:49:30.546] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:49:36.869] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:49:44.275] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:49:50.992] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:49:57.555] [INFO] red_social - Usuario adripc@live.com solicitó amistad a usuario 77777778A@uniovi.es
+[2018-05-11T13:49:59.758] [INFO] red_social - Usuario adripc@live.com identificado
+[2018-05-11T13:50:01.740] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:50:06.768] [INFO] red_social - Usuario 77777778A@uniovi.es identificado
+[2018-05-11T13:50:11.643] [INFO] red_social - Usuario 77777778A@uniovi.es acepto amistad de usuario adripc@live.com
+[2018-05-11T13:50:14.778] [INFO] red_social - Usuario adripc@live.com identificado
+>>>>>>> 72eaf4faf01e4c93e8e4e2d6493d60b31e2002a2
