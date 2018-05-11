@@ -1,6 +1,6 @@
 module.exports = function(app, swig, gestorBD) {
 
-	app.post("/api/mensaje/:destinatario", function(req, res) {//Se puede haccer esto en un post?
+	app.post("/api/mensaje/:destinatario", function(req, res) {
 		 
 		 var destinatario = req.params.destinatario;
 		 var texto = req.body.texto;
@@ -40,7 +40,7 @@ module.exports = function(app, swig, gestorBD) {
 		
 	});
 	
-	app.get("/api/conversacion/:destinatario", function(req, res) {//Se puede haccer esto en un post?
+	app.get("/api/conversacion/:destinatario", function(req, res) {
 		 
 		 var destinatario = req.params.destinatario;
 		 
@@ -64,7 +64,7 @@ module.exports = function(app, swig, gestorBD) {
 		
 	});
 	
-	app.put("/api/conversacion/leer/mensaje/:id", function(req, res) {
+	app.put("/api/mensaje/:id/leer", function(req, res) {
 		 
 		 var criterioMensaje ={ 
 				 "_id" :  gestorBD.mongo.ObjectID(req.params.id),
