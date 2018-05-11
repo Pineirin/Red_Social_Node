@@ -16,8 +16,8 @@ module.exports = {
 			 var collectionRelaciones = db.collection('relaciones');
 			 var emailOrigen="adripc@live.com"
 			 var emailsDestinos=["Juan@hotmail.com","Roberto@hotmail.com"];
-			 collectionRelaciones.remove({"origen" : {$ne : emailOrigen}, 
-				 "destino" : {$nin : emailsDestinos}});
+			 collectionRelaciones.remove({"origen" : {$ne : emailOrigen}});
+			 collectionRelaciones.remove({"destino" : {$nin : emailsDestinos}});
 			 
 			 //Borrar usuarios sobrantes
 			 var collectionUsuarios = db.collection('usuarios');
