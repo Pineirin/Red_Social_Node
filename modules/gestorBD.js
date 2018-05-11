@@ -4,7 +4,34 @@ module.exports = {
 	init : function(app, mongo) {
 		this.mongo = mongo;
 		this.app = app;
+		
+		this.mongo.MongoClient.connect("mongodb://admin:sdi@ds029655.mlab.com:29655/redsocial",
+				function(err, db){
+			//Borrar mensajes sobrantes
+			 var collectionMensajes = db.collection('mensajes');
+			 var mensajes=["Mensaje 1","Mensaje 2","Mensaje 3"];
+			 collectionMensajes.remove({"texto" : {$nin : mensajes}});
+			 
+			 //Borrar relaciones sobrantes
+			 var collectionRelaciones = db.collection('relaciones');
+			 var emailOrigen="adripc@live.com"
+			 var emailsDestinos=["Juan@hotmail.com","Roberto@hotmail.com"];
+			 collectionRelaciones.remove({"origen" : {$ne : emailOrigen}, 
+				 "destino" : {$nin : emailsDestinos}});
+			 
+			 //Borrar usuarios sobrantes
+			 var collectionUsuarios = db.collection('usuarios');
+			 var emails=["adripc@live.com","Juan@hotmail.com","Roberto@hotmail.com"];
+			 collectionUsuarios.remove({"email" : {$nin : emails}});
+			 
+			 db.close();
+			 //collection.insert("Mensaje 1");
+			 
+		});
+		
+		
 	},
+
     obtenerUsuariosPg : function(criterio,pg,funcionCallback){
 	    this.mongo.MongoClient.connect(this.app.get('db'), function(err, db) {
 	        if (err) {
